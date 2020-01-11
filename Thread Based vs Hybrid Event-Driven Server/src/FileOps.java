@@ -5,7 +5,12 @@ import java.io.RandomAccessFile;
 
 public class FileOps {
 	
-	public void WriteMiddleOfFile(long pos,String path,String data){
+	public static void main(String[] args) {
+		//FileOps.WriteMiddleOfFile(10,"c:\\Testes\\s.mkv","haha");
+		FileOps.ReadFromFile(0,"c:\\Testes\\s.mkv");
+		System.out.println("Done");
+	}
+	public static void WriteMiddleOfFile(long pos,String path,String data){
 		RandomAccessFile f;
 		try {
 			f = new RandomAccessFile(new File(path), "rw");
@@ -13,21 +18,29 @@ public class FileOps {
 		    f.write(data.getBytes());
 		    f.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("error");
 			e.printStackTrace();
 		}	    
 	}
+
 	
-	public void ReadFromFile(long pos, String path){
+	public static void ReadFromFile(long pos, String path){
 		RandomAccessFile f;
+		
 		try {
 		    FileReader fr = new FileReader(path); 
 		    int i; 
-		    while ((i=fr.read()) != -1) 
-		      System.out.print((char) i); 
+		    while ((i=fr.read()) != -1) {
+		      System.out.print((char) i);
+		    }
+		    fr.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void DeleteFile(String path) {
+		
 	}
 }
 	
