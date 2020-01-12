@@ -1,3 +1,4 @@
+package client;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 
-public class KeyListener implements Runnable {
+public class GUI implements Runnable {
 
 	ClientCreator.Statistics cc;
 	private JFrame frame;
@@ -39,7 +40,7 @@ public class KeyListener implements Runnable {
 	/**
 	 * Create the application.
 	 */
-	public KeyListener(ClientCreator.Statistics cc) {
+	public GUI(ClientCreator.Statistics cc) {
 		this.cc = cc;
 	}
 
@@ -59,8 +60,10 @@ public class KeyListener implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int cps = Integer.parseInt(textField.getText());
-				if(cps != 0)
+				if(cps != 0) {
 					cc.ConnectionsPerSecond = cps;
+					System.out.println("Connections per second changed to " + cps);
+				}
 				
 			}
 		};

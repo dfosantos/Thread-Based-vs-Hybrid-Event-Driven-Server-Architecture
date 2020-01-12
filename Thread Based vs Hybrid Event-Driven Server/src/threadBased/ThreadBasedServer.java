@@ -1,5 +1,9 @@
+package threadBased;
+
 import java.io.IOException;
 import java.net.*;
+
+import server.ClientHandler;
 
 public class ThreadBasedServer implements Runnable {
 
@@ -15,17 +19,26 @@ public class ThreadBasedServer implements Runnable {
 		System.out.println("Running Thread Based Server");
 
 		openServerSocket();
-
+		Socket clientSocket = null;
+		
 		while (true) {
-			Socket clientSocket = null;
+			
 
 			try {
+				System.out.println("Waiting Client");
 				clientSocket = this.serverSocket.accept();
+				System.out.println("Client Accepted");
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);
 			}
 
-			new ClientHandler(clientSocket).run();
+			try {
+				System.out.println("Creating Thread for client");
+				new ClientHandler(clientSocket).run();
+				System.out.println("Thread Created");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		}
 
