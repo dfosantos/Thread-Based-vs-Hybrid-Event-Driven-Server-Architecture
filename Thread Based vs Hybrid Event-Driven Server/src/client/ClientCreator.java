@@ -43,7 +43,6 @@ public class ClientCreator {
 
 			try {
 				s = new Socket(ip, port);
-				System.out.println("Looping");
 				c = new Client(s, stats);
 				c.start();
 				Thread.sleep(1000 / stats.ConnectionsPerSecond);

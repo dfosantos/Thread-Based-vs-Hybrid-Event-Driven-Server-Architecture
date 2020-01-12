@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Time;
+
+import com.sun.org.apache.xml.internal.serializer.utils.SystemIDResolver;
 
 public class ClientHandler extends Thread{
 
 	DataInputStream in;
 	DataOutputStream out;
 	Socket socket;
-	static final String path = "../file";
+	static final String path = "files/file";
 	
 	public ClientHandler(Socket clientSocket) throws IOException {
 		this.socket = clientSocket;
@@ -26,13 +29,12 @@ public class ClientHandler extends Thread{
 		int size;
 		int offset;
 		byte[] read = null;
+		
+		long time = System.currentTimeMillis();
+		
 		try {
-			System.out.println("about to read");
 			size = in.readInt();
-			System.out.println("read");
 			offset = in.readInt();
-			System.out.println(size);
-			System.out.println(offset);
 			read = FileOps.NIO_Read(ClientHandler.path, size, offset);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,6 +58,7 @@ public class ClientHandler extends Thread{
 			e.printStackTrace();
 		}
 
+		System.out.println("Client took " + Long.toString(System.currentTimeMillis() - time) + "ms");
 	}
 
 }

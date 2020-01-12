@@ -64,7 +64,7 @@ public interface FileOps {
 		ByteBuffer buffer = null;
 		
 		try {
-			file = new RandomAccessFile(path, "w");
+			file = new RandomAccessFile(path, "rw");
 			channel = file.getChannel();
 			buffer = ByteBuffer.allocate(data.length);
 			buffer.put(data);

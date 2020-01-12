@@ -27,16 +27,13 @@ public class Client extends Thread{
 	@Override
 	public void run() {
 		try {
-			System.out.println("About to write");
 			out.writeInt(stats.nBytes);
-			System.out.println("Bytes WRitten");
 			out.writeInt(getRandomNumberInRange(0,1073741824 - stats.nBytes));
 			in.readLong();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("Client Finished");
 	}
 	
 	private static int getRandomNumberInRange(int min, int max) {

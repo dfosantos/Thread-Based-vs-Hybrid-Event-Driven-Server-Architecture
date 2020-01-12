@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.*;
 
 import server.ClientHandler;
+import server.ServerStatistics;
 
 public class ThreadBasedServer implements Runnable {
 
@@ -21,6 +22,8 @@ public class ThreadBasedServer implements Runnable {
 		openServerSocket();
 		Socket clientSocket = null;
 
+		new ServerStatistics().start();
+		
 		while (true) {
 
 			try {
