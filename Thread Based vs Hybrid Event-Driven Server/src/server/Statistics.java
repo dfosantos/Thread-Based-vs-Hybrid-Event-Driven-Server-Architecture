@@ -2,6 +2,9 @@ package server;
 
 public class Statistics extends Thread{
 	
+	
+	public static float CPS;
+	
 	@Override
 	public void run() {
 		while(true) {

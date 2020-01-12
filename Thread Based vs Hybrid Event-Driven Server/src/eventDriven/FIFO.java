@@ -3,6 +3,8 @@ package eventDriven;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import client.ClientCreator.Statistics;
 import server.ClientHandler;
 
 public class FIFO extends Thread {
@@ -27,9 +29,12 @@ public class FIFO extends Thread {
 
 		Socket clientSocket;
 		
+		Statistics stats = new Statistics();
+		
 		while (true) {
 
 			try {
+				
 				clientSocket = serverSocket.accept();
 				
 				// Adds Client to FIFO
