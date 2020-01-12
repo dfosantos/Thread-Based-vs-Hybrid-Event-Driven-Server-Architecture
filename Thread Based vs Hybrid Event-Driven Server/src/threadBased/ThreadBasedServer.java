@@ -20,24 +20,15 @@ public class ThreadBasedServer implements Runnable {
 
 		openServerSocket();
 		Socket clientSocket = null;
-		
+
 		while (true) {
-			
 
 			try {
-				System.out.println("Waiting Client");
 				clientSocket = this.serverSocket.accept();
 				System.out.println("Client Accepted");
+				new ClientHandler(clientSocket).start();
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);
-			}
-
-			try {
-				System.out.println("Creating Thread for client");
-				new ClientHandler(clientSocket).run();
-				System.out.println("Thread Created");
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 
 		}

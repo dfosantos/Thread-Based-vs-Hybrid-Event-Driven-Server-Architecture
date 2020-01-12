@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler extends Thread{
 
 	DataInputStream in;
 	DataOutputStream out;
