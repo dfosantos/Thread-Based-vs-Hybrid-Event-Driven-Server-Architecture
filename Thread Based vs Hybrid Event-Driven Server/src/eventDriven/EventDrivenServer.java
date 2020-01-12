@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import server.ClientHandler;
+import server.ServerStatisticsGUI;
 import server.Statistics;
 
 public class EventDrivenServer implements Runnable {
@@ -29,7 +30,8 @@ public class EventDrivenServer implements Runnable {
 		threadNumber = 4;
 
 		long t = System.currentTimeMillis();
-
+		
+		new ServerStatisticsGUI().run();
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);
 
 		// Starts the FIFO to accept client connections

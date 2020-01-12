@@ -10,7 +10,6 @@ import client.ClientCreator;
 public class ServerStatisticsGUI implements Runnable {
 
 	private JFrame frame;
-	ClientCreator.Statistics cc;
 
 	/**
 	 * Launch the application.
@@ -31,8 +30,8 @@ public class ServerStatisticsGUI implements Runnable {
 	/**
 	 * Create the application.
 	 */
-	public ServerStatisticsGUI(ClientCreator.Statistics cc) {
-		this.cc = cc;
+	public ServerStatisticsGUI() {
+
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class ServerStatisticsGUI implements Runnable {
 		JLabel lblNewLabel = new JLabel("Connections Per Second:");
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel(Integer.toString(cc.ConnectionsPerSecond));
+		JLabel lblNewLabel_2 = new JLabel("Something");
 		panel_1.add(lblNewLabel_2);
 		
 		JPanel panel = new JPanel();
