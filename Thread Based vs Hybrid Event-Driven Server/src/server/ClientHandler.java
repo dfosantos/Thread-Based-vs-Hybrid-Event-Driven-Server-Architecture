@@ -29,8 +29,7 @@ public class ClientHandler extends Thread{
 		int size;
 		int offset;
 		byte[] read = null;
-		
-		long time = System.currentTimeMillis();
+	
 		
 		try {
 			size = in.readInt();
@@ -58,7 +57,6 @@ public class ClientHandler extends Thread{
 			e.printStackTrace();
 		}
 
-		System.out.println("Client took " + Long.toString(System.currentTimeMillis() - time) + "ms");
 	}
 
 }

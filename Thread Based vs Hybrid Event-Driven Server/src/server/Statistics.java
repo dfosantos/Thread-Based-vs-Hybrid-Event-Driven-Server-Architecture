@@ -1,6 +1,6 @@
 package server;
 
-public class ServerStatistics extends Thread{
+public class Statistics extends Thread{
 	
 	@Override
 	public void run() {

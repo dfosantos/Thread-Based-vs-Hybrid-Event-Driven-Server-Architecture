@@ -1,30 +1,47 @@
 package eventDriven;
-import java.util.ArrayList;
 
-public class EventDrivenServer implements Runnable{
+import java.net.ServerSocket;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import server.ClientHandler;
+import server.Statistics;
+
+public class EventDrivenServer implements Runnable {
+
+	protected int serverPort = 8080;
+	protected ServerSocket serverSocket = null;
+	static Queue<ClientHandler> FIFO = new LinkedList<>();
+
+	public EventDrivenServer(int port) {
+		this.serverPort = port;
+	}
 
 	@Override
 	public void run() {
 		System.out.println("Running Event Driven Server");
-		
-		System.out.println(Runtime.getRuntime().availableProcessors());
+
+		int threadNumber;
+		threadNumber = Runtime.getRuntime().availableProcessors();
+		threadNumber = 4;
+
 		long t = System.currentTimeMillis();
-		int threadNumber = 1;
-		ArrayList<Thread> threads = new ArrayList<>();
 
-		for (int i = 0; i < threadNumber; i++) {
-			Thread thread = new test();
-			thread.start();
-			threads.add(thread);
-		}
+		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);
 
-		for (Thread thread : threads) {
-			try {
-				thread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		// Starts the FIFO to accept client connections
+		new FIFO(serverPort).start();
+
+		while (true) {
+			System.out.println(executor.getActiveCount() );
+			if (executor.getActiveCount() < threadNumber && !FIFO.isEmpty()) {
+				executor.execute(FIFO.remove());
+
 			}
+
 		}
 
 	}

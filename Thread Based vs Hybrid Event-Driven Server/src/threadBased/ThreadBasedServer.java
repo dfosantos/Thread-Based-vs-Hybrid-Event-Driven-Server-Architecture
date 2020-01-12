@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.*;
 
 import server.ClientHandler;
-import server.ServerStatistics;
+import server.Statistics;
 
 public class ThreadBasedServer implements Runnable {
 
@@ -22,13 +22,12 @@ public class ThreadBasedServer implements Runnable {
 		openServerSocket();
 		Socket clientSocket = null;
 
-		new ServerStatistics().start();
+		new Statistics().start();
 		
 		while (true) {
 
 			try {
 				clientSocket = this.serverSocket.accept();
-				System.out.println("Client Accepted");
 				new ClientHandler(clientSocket).start();
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);

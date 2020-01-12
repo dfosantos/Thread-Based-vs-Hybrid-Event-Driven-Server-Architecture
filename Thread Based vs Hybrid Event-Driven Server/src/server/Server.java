@@ -17,7 +17,7 @@ public class Server {
 			new ThreadBasedServer(Integer.parseInt(args[1])).run();
 
 		else if (args[0].equals("EVENT"))
-			new EventDrivenServer().run();
+			new EventDrivenServer(Integer.parseInt(args[1])).run();
 
 		else {
 			System.out.println("Proper Usage: \n\tjava Server THREAD \n\tjava Server EVENT");
