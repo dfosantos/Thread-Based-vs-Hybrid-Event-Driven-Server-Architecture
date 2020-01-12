@@ -45,6 +45,7 @@ public class ClientCreator {
 				s = new Socket(ip, port);
 				System.out.println("Looping");
 				c = new Client(s, stats);
+				c.start();
 				Thread.sleep(1000 / stats.ConnectionsPerSecond);
 			} catch (InterruptedException | IOException e) {
 				System.out.println("Couldn't Connect to Server");
