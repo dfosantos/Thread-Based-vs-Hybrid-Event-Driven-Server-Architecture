@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.*;
+import java.nio.channels.FileChannel;
 
 public class FileOps {
 	
@@ -39,8 +41,45 @@ public class FileOps {
 		}
 	}
 	
-	public void DeleteFile(String path) {
-		
+	public void NIO_Read(String path, int size) {
+		try {
+			RandomAccessFile file = new RandomAccessFile(new File(path), "wr");
+			FileChannel channel = file.getChannel();
+			ByteBuffer buf = ByteBuffer.allocate(size);
+			int nrBytes = channel.read(buf);
+			while(nrBytes!= -1){
+				buf.flip();
+				while(buf.hasRemaining()) {
+					System.out.print((char) buf.get());
+				}
+				buf.clear();
+				nrBytes= channel.read(buf);
+			}
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void NIO_Write(String path, int size, String data) {
+		try {
+			RandomAccessFile file = new RandomAccessFile(new File(path), "wr");
+			FileChannel channel = file.getChannel();
+			ByteBuffer buf = ByteBuffer.allocate(size);
+			buf.put(data.getBytes());
+			int nrBytes = channel.write(buf);
+			while(nrBytes!= -1){
+				buf.flip();
+				while(buf.hasRemaining()) {
+					System.out.print((char) buf.get());
+				}
+				buf.clear();
+				nrBytes= channel.write(buf);
+			}
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 	
