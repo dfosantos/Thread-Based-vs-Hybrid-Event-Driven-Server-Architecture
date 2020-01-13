@@ -14,6 +14,7 @@ public class ClientCreator {
 	static int port;
 	static Statistics stats;
 	static Timer timer;
+	static long t = 0;
 
 	public static void main(String[] args) {
 
@@ -52,6 +53,8 @@ public class ClientCreator {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
+				System.out.println(1000.0/(System.currentTimeMillis() - t));
+				t = System.currentTimeMillis();
 				Socket s = null;
 				try {
 					s = new Socket(ip, port);
@@ -67,6 +70,7 @@ public class ClientCreator {
 					e.printStackTrace();
 				}
 				c.start();
+				;
 			}
 		}, 0, millis);
 
