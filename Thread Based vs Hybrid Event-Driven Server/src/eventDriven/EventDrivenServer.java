@@ -29,7 +29,6 @@ public class EventDrivenServer implements Runnable {
 		threadNumber = Runtime.getRuntime().availableProcessors();
 		threadNumber = 4;
 
-		long t = System.currentTimeMillis();
 		
 		new ServerStatisticsGUI().run();
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);

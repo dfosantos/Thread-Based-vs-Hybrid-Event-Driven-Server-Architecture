@@ -16,11 +16,13 @@ public class ClientHandler extends Thread{
 	DataOutputStream out;
 	Socket socket;
 	static final String path = "files/file";
+	long startTime;
 	
-	public ClientHandler(Socket clientSocket) throws IOException {
+	public ClientHandler(Socket clientSocket, long startTime) throws IOException {
 		this.socket = clientSocket;
 		this.in = new DataInputStream(socket.getInputStream());
 		this.out = new DataOutputStream(socket.getOutputStream());
+		this.startTime = startTime;
 	}
 
 	@Override
@@ -57,6 +59,7 @@ public class ClientHandler extends Thread{
 			e.printStackTrace();
 		}
 
+		Statistics.clientTimes.add(System.currentTimeMillis() - startTime);
 	}
 
 }

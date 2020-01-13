@@ -54,7 +54,7 @@ public class ClientCreator {
 
 	}
 
-	public static class Statistics {
+	static class Statistics {
 		public int ConnectionsPerSecond = 1;
 		public int nBytes = 10000;
 	}
