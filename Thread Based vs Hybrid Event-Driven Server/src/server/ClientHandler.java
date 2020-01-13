@@ -25,7 +25,7 @@ public class ClientHandler extends Thread {
 	@Override
 	public void run() {
 
-		int size;
+		int size = 0;
 		int offset;
 		byte[] read = null;
 
@@ -55,8 +55,6 @@ public class ClientHandler extends Thread {
 			e.printStackTrace();
 		}
 
-		Statistics.clientTimes.add(System.currentTimeMillis() - startTime);
-
 		try {
 			in.close();
 			out.close();
@@ -65,6 +63,10 @@ public class ClientHandler extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		long time = System.currentTimeMillis() - startTime;
+		Statistics.clientTimes.add(time);
+		Statistics.clientDebits.add((float) (size / time));
 
 	}
 

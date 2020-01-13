@@ -52,7 +52,7 @@ public class GUI implements Runnable {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 431, 288);
+		frame.setBounds(100, 100, 298, 159);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

@@ -53,13 +53,10 @@ public class ClientCreator {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println(1000.0/(System.currentTimeMillis() - t));
-				t = System.currentTimeMillis();
 				Socket s = null;
 				try {
 					s = new Socket(ip, port);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Client c = null;
