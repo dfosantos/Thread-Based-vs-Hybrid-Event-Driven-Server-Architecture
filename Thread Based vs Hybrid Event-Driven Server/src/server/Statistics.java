@@ -24,7 +24,7 @@ public class Statistics extends Thread {
 			if (Server.server.equals("EVENT"))
 				Statistics.activeThreads = EventDrivenServer.executor.getActiveCount();
 			else
-				Statistics.activeThreads = java.lang.Thread.activeCount();
+				Statistics.activeThreads = java.lang.Thread.activeCount() - 3;
 			ServerStatisticsGUI.lblNewLabel_3.setText(String.valueOf(CPS));
 			ServerStatisticsGUI.label.setText(String.valueOf(averageTimePerClient) + "ms");
 			ServerStatisticsGUI.label_2.setText(String.valueOf(activeThreads));
