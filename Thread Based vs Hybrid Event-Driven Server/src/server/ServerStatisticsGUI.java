@@ -1,8 +1,13 @@
 package server;
 
 import javax.swing.JFrame;
+
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
+
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.JLabel;
 import client.ClientCreator;
 
@@ -39,27 +44,50 @@ public class ServerStatisticsGUI implements Runnable {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 181, 197);
+		frame.getContentPane().setForeground(SystemColor.menu);
+		frame.getContentPane().setBackground(SystemColor.menu);
+		frame.setBounds(100, 100, 257, 246);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame.getContentPane().setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel lblLigaesPS = new JLabel("Liga\u00E7\u00F5es p/ segundo");
+		lblLigaesPS.setBounds(28, 47, 116, 14);
+		frame.getContentPane().add(lblLigaesPS);
 		
-		JLabel lblNewLabel = new JLabel("Connections Per Second:");
-		panel_1.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("Tempo m\u00E9dio p/ cliente");
+		lblNewLabel.setBounds(28, 82, 122, 14);
+		frame.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Something");
-		panel_1.add(lblNewLabel_2);
+		JLabel lblNewLabel_1 = new JLabel("D\u00E9bito");
+		lblNewLabel_1.setBounds(28, 116, 116, 14);
+		frame.getContentPane().add(lblNewLabel_1);
 		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel);
+		JLabel lblNewLabel_2 = new JLabel("n\u00BA Threads Ativas");
+		lblNewLabel_2.setBounds(28, 146, 109, 14);
+		frame.getContentPane().add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("Average Client Time: ");
-		panel.add(lblNewLabel_1);
+		JLabel lblNewLabel_3 = new JLabel(String.valueOf(Statistics.CPS));
+		lblNewLabel_3.setForeground(UIManager.getColor("CheckBox.focus"));
+		lblNewLabel_3.setBackground(Color.LIGHT_GRAY);
+		lblNewLabel_3.setBounds(169, 47, 46, 14);
+		frame.getContentPane().add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		panel.add(lblNewLabel_3);
+		JLabel label = new JLabel(String.valueOf(Statistics.averageTimePerClient));
+		label.setForeground(Color.BLACK);
+		label.setBackground(Color.LIGHT_GRAY);
+		label.setBounds(169, 82, 46, 14);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("Valores");
+		label_1.setForeground(Color.BLACK);
+		label_1.setBackground(Color.LIGHT_GRAY);
+		label_1.setBounds(169, 116, 46, 14);
+		frame.getContentPane().add(label_1);
+		
+		JLabel label_2 = new JLabel(String.valueOf(Statistics.activeThreads));
+		label_2.setForeground(Color.BLACK);
+		label_2.setBackground(Color.LIGHT_GRAY);
+		label_2.setBounds(169, 146, 46, 14);
+		frame.getContentPane().add(label_2);
 	}
 }
