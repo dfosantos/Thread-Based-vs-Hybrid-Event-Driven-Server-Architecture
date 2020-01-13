@@ -3,19 +3,18 @@ package eventDriven;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import server.ClientHandler;
 import server.ServerStatisticsGUI;
-import server.Statistics;
 
 public class EventDrivenServer implements Runnable {
 
 	protected int serverPort = 8080;
 	protected ServerSocket serverSocket = null;
 	static Queue<ClientHandler> FIFO = new LinkedList<>();
+	protected ThreadPoolExecutor executor;
 
 	public EventDrivenServer(int port) {
 		this.serverPort = port;
@@ -29,9 +28,8 @@ public class EventDrivenServer implements Runnable {
 		threadNumber = Runtime.getRuntime().availableProcessors();
 		threadNumber = 4;
 
-		
 		new ServerStatisticsGUI().run();
-		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);
+		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);
 
 		// Starts the FIFO to accept client connections
 		new FIFO(serverPort).start();

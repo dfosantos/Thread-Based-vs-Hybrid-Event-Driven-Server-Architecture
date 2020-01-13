@@ -3,17 +3,17 @@ package server;
 import javax.swing.JFrame;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.SystemColor;
 
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
-import client.ClientCreator;
 
 
 public class ServerStatisticsGUI implements Runnable {
 
+	public static JLabel lblNewLabel_3 = new JLabel();
+	public static JLabel label = new JLabel(String.valueOf(Statistics.averageTimePerClient));
+	public static JLabel label_2 = new JLabel(String.valueOf(Statistics.activeThreads));
 	private JFrame frame;
 
 	/**
@@ -46,7 +46,7 @@ public class ServerStatisticsGUI implements Runnable {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(SystemColor.menu);
 		frame.getContentPane().setBackground(SystemColor.menu);
-		frame.setBounds(100, 100, 257, 246);
+		frame.setBounds(100, 100, 300, 245);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -66,13 +66,12 @@ public class ServerStatisticsGUI implements Runnable {
 		lblNewLabel_2.setBounds(28, 146, 109, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel(String.valueOf(Statistics.CPS));
 		lblNewLabel_3.setForeground(UIManager.getColor("CheckBox.focus"));
 		lblNewLabel_3.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel_3.setBounds(169, 47, 46, 14);
 		frame.getContentPane().add(lblNewLabel_3);
 		
-		JLabel label = new JLabel(String.valueOf(Statistics.averageTimePerClient));
+		
 		label.setForeground(Color.BLACK);
 		label.setBackground(Color.LIGHT_GRAY);
 		label.setBounds(169, 82, 46, 14);
@@ -84,10 +83,11 @@ public class ServerStatisticsGUI implements Runnable {
 		label_1.setBounds(169, 116, 46, 14);
 		frame.getContentPane().add(label_1);
 		
-		JLabel label_2 = new JLabel(String.valueOf(Statistics.activeThreads));
+		
 		label_2.setForeground(Color.BLACK);
 		label_2.setBackground(Color.LIGHT_GRAY);
 		label_2.setBounds(169, 146, 46, 14);
 		frame.getContentPane().add(label_2);
 	}
+	
 }

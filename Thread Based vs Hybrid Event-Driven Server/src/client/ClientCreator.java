@@ -12,7 +12,7 @@ public class ClientCreator {
 	static InetAddress ip;
 	static int port;
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 
 		if (args.length != 2) {
 			System.out.println(
@@ -42,11 +42,14 @@ public class ClientCreator {
 		while (true) {
 
 			try {
+
 				s = new Socket(ip, port);
 				c = new Client(s, stats);
 				c.start();
-				Thread.sleep(1000 / stats.ConnectionsPerSecond);
-			} catch (InterruptedException | IOException e) {
+				long time = System.currentTimeMillis();
+				while (System.currentTimeMillis() - time < (1 / stats.ConnectionsPerSecond))
+					;
+			} catch (IOException e) {
 				System.out.println("Couldn't Connect to Server");
 				e.printStackTrace();
 			}

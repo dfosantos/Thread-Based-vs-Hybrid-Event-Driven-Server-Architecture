@@ -14,10 +14,11 @@ public class Statistics extends Thread{
 	public void run() {
 		while(true) {
 			Statistics.activeThreads = java.lang.Thread.activeCount();		
-			//System.out.println(CPS);
-			
+			ServerStatisticsGUI.lblNewLabel_3.setText(String.valueOf(CPS));
+			ServerStatisticsGUI.label.setText(String.valueOf(averageTimePerClient));
+			ServerStatisticsGUI.label_2.setText(String.valueOf(activeThreads));
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

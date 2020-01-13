@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.*;
 
 import server.ClientHandler;
+import server.ServerStatisticsGUI;
 import server.Statistics;
 
 public class ThreadBasedServer implements Runnable {
@@ -23,12 +24,16 @@ public class ThreadBasedServer implements Runnable {
 		Socket clientSocket = null;
 
 		new Statistics().start();
-		
+		new ServerStatisticsGUI().run();
+		long time = System.currentTimeMillis();
 		while (true) {
 
 			try {
 				clientSocket = this.serverSocket.accept();
-				new ClientHandler(clientSocket, System.currentTimeMillis()).start();
+				//System.out.println(System.currentTimeMillis() - time);
+				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time)*1000);
+				time = System.currentTimeMillis();
+				//new ClientHandler(clientSocket, System.currentTimeMillis()).start();
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);
 			}

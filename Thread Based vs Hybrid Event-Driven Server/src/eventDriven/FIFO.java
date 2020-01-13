@@ -27,17 +27,15 @@ public class FIFO extends Thread {
 		}
 
 		Socket clientSocket;
-		new Statistics().run();
-		long time = System.currentTimeMillis();;
+		new Statistics().start();
+		long time = System.currentTimeMillis();
 
 		while (true) {
 
 			try {
-
+				
 				clientSocket = serverSocket.accept();
-				System.out.println("client accepted");
-				System.out.println(System.currentTimeMillis()-time);
-				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time));
+				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time)*1000);
 				time = System.currentTimeMillis();
 				
 				// Adds Client to FIFO
