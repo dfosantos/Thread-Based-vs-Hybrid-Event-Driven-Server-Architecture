@@ -3,14 +3,17 @@ package client;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientCreator {
 
 	static int ConnectionsPerSecond;
 	static InetAddress ip;
 	static int port;
+	static Statistics stats;
+	static Timer timer;
 
 	public static void main(String[] args) {
 
@@ -28,32 +31,44 @@ public class ClientCreator {
 		}
 
 		port = Integer.parseInt(args[1]);
-		Statistics stats = new Statistics();
-		Socket s = new Socket();
-		try {
-			s.setSoTimeout(1000);
-		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Client c;
+
+		stats = new Statistics();
+
 		new GUI(stats).run();
 
-		while (true) {
+		changeCPS(1000);
 
-			try {
+	}
 
-				s = new Socket(ip, port);
-				c = new Client(s, stats);
-				c.start();
-				long time = System.currentTimeMillis();
-				while (System.currentTimeMillis() - time < (1 / stats.ConnectionsPerSecond))
-					;
-			} catch (IOException e) {
-				System.out.println("Couldn't Connect to Server");
-				e.printStackTrace();
-			}
+	public static void changeCPS(int millis) {
+		try {
+			timer.cancel();
+		} catch (Exception e) {
+			System.out.println("Already canceled");
 		}
+
+		timer = new Timer();
+		
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				Socket s = null;
+				try {
+					s = new Socket(ip, port);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Client c = null;
+				try {
+					c = new Client(s, stats);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				c.start();
+			}
+		}, 0, millis);
 
 	}
 

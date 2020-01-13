@@ -70,6 +70,7 @@ public class GUI implements Runnable {
 				int cps = Integer.parseInt(textField.getText());
 				if (cps != 0) {
 					cc.ConnectionsPerSecond = cps;
+					ClientCreator.changeCPS((int) ((1.0 / cps) * 1000));
 					System.out.println("Connections per second changed to " + cps);
 				}
 
