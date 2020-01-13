@@ -7,14 +7,14 @@ import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread {
 
 	DataInputStream in;
 	DataOutputStream out;
 	Socket socket;
 	static final String path = "files/file";
 	long startTime;
-	
+
 	public ClientHandler(Socket clientSocket, long startTime) throws IOException {
 		this.socket = clientSocket;
 		this.in = new DataInputStream(socket.getInputStream());
@@ -28,8 +28,7 @@ public class ClientHandler extends Thread{
 		int size;
 		int offset;
 		byte[] read = null;
-	
-		
+
 		try {
 			size = in.readInt();
 			offset = in.readInt();
@@ -44,11 +43,11 @@ public class ClientHandler extends Thread{
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		
+
 		byte[] sha256 = msg.digest(read);
-		
+
 		FileOps.NIO_Write(path, sha256);
-		
+
 		try {
 			out.writeLong(java.nio.ByteBuffer.wrap(sha256).getLong());
 		} catch (IOException e) {
@@ -57,6 +56,16 @@ public class ClientHandler extends Thread{
 		}
 
 		Statistics.clientTimes.add(System.currentTimeMillis() - startTime);
+
+		try {
+			in.close();
+			out.close();
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

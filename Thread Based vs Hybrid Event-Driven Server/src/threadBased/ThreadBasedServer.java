@@ -33,7 +33,7 @@ public class ThreadBasedServer implements Runnable {
 				//System.out.println(System.currentTimeMillis() - time);
 				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time)*1000);
 				time = System.currentTimeMillis();
-				//new ClientHandler(clientSocket, System.currentTimeMillis()).start();
+				new ClientHandler(clientSocket, System.currentTimeMillis()).start();
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);
 			}
