@@ -6,38 +6,31 @@ import java.io.IOException;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 public class ClientHandler extends Thread {
 
-	DataInputStream in;
-	DataOutputStream out;
 	Socket socket;
 	static final String path = "files/file";
 	long startTime;
 
 	public ClientHandler(Socket clientSocket, long startTime) throws IOException {
 		this.socket = clientSocket;
-		this.in = new DataInputStream(socket.getInputStream());
-		this.out = new DataOutputStream(socket.getOutputStream());
+
 		this.startTime = startTime;
 	}
 
 	@Override
 	public void run() {
 
-		int size = 0;
-		int offset;
+		int size = 10000;
+		int offset = getRandomNumberInRange(0,1073741824 - size);
 		byte[] read = null;
 
-		try {
-			size = in.readInt();
-			offset = in.readInt();
-			read = FileOps.NIO_Read(ClientHandler.path, size, offset);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		read = FileOps.NIO_Read(ClientHandler.path, size, offset);
 
 		MessageDigest msg = null;
+		
 		try {
 			msg = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
@@ -48,16 +41,8 @@ public class ClientHandler extends Thread {
 
 		FileOps.NIO_Write(path, sha256);
 
-		try {
-			out.writeLong(java.nio.ByteBuffer.wrap(sha256).getLong());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
-			in.close();
-			out.close();
 			socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -68,6 +53,16 @@ public class ClientHandler extends Thread {
 		Statistics.clientTimes.add(time);
 		Statistics.clientDebits.add((float) (size / time));
 
+	}
+	
+	private static int getRandomNumberInRange(int min, int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
 	}
 
 }

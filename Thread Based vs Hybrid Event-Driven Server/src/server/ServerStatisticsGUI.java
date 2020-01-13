@@ -1,12 +1,22 @@
 package server;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 
 import javax.swing.UIManager;
+
+import client.ClientCreator;
+import threadBased.ThreadBasedServer;
+
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
 
 
 public class ServerStatisticsGUI implements Runnable {
@@ -15,6 +25,8 @@ public class ServerStatisticsGUI implements Runnable {
 	public static JLabel label = new JLabel(String.valueOf(Statistics.averageTimePerClient));
 	public static JLabel label_2 = new JLabel(String.valueOf(Statistics.activeThreads));
 	private JFrame frame;
+	private JTextField textField_CPS;
+	private JTextField textField_FileSize;
 
 	/**
 	 * Launch the application.
@@ -46,7 +58,7 @@ public class ServerStatisticsGUI implements Runnable {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(SystemColor.menu);
 		frame.getContentPane().setBackground(SystemColor.menu);
-		frame.setBounds(100, 100, 300, 245);
+		frame.setBounds(100, 100, 494, 243);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -88,6 +100,60 @@ public class ServerStatisticsGUI implements Runnable {
 		label_2.setBackground(Color.LIGHT_GRAY);
 		label_2.setBounds(169, 146, 46, 14);
 		frame.getContentPane().add(label_2);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(225, 0, 243, 204);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		
+		Action cps_action = new AbstractAction() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int cps = Integer.parseInt(textField_CPS.getText());
+				if (cps != 0) {
+					ThreadBasedServer.CPS = cps;
+				}
+
+			}
+		};
+		
+		Action newSize = new AbstractAction() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int size = Integer.parseInt(textField_FileSize.getText());
+				System.out.println(size);
+				if (size != 0) {
+					ThreadBasedServer.FileSize = size;
+				}
+
+			}
+		};
+		
+		JLabel lblNewLabel_4 = new JLabel("Connections per second");
+		lblNewLabel_4.setBounds(22, 19, 115, 33);
+		panel.add(lblNewLabel_4);
+		
+		textField_CPS = new JTextField();
+		textField_CPS.addActionListener(cps_action);
+		textField_CPS.setBounds(147, 14, 86, 43);
+		panel.add(textField_CPS);
+		textField_CPS.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("File Size (KB)");
+		lblNewLabel_5.setBounds(45, 94, 61, 43);
+		panel.add(lblNewLabel_5);
+		
+		textField_FileSize = new JTextField();
+		textField_FileSize.setBounds(147, 92, 86, 46);
+		textField_FileSize.addActionListener(newSize);
+		panel.add(textField_FileSize);
+		textField_FileSize.setColumns(10);
 	}
-	
 }

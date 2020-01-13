@@ -34,7 +34,7 @@ public class FIFO extends Thread {
 
 			try {
 				
-				clientSocket = serverSocket.accept();
+				clientSocket = new Socket();
 				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time)*1000);
 				time = System.currentTimeMillis();
 				

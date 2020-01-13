@@ -11,6 +11,8 @@ public class ThreadBasedServer implements Runnable {
 
 	protected int serverPort = 8080;
 	protected ServerSocket serverSocket = null;
+	public static int CPS = 1;
+	public static int FileSize = 10;
 
 	public ThreadBasedServer(int port) {
 		this.serverPort = port;
@@ -29,8 +31,10 @@ public class ThreadBasedServer implements Runnable {
 		while (true) {
 
 			try {
-				clientSocket = this.serverSocket.accept();
-				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time)*1000);
+				while (System.currentTimeMillis() - time < (1.0 / CPS))
+					;
+				clientSocket = new Socket();
+				Statistics.CPS = (float) (1.0 / (System.currentTimeMillis() - time) * 1000);
 				time = System.currentTimeMillis();
 				new ClientHandler(clientSocket, System.currentTimeMillis()).start();
 			} catch (IOException e) {
