@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Time;
-
-import com.sun.org.apache.xml.internal.serializer.utils.SystemIDResolver;
 
 public class ClientHandler extends Thread{
 

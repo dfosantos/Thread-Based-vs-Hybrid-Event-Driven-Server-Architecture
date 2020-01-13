@@ -28,18 +28,22 @@ public class FIFO extends Thread {
 
 		Socket clientSocket;
 		new Statistics().run();
-		
+		long time = System.currentTimeMillis();;
+
 		while (true) {
 
 			try {
-				
-				clientSocket = serverSocket.accept();
 
+				clientSocket = serverSocket.accept();
+				System.out.println("client accepted");
+				System.out.println(System.currentTimeMillis()-time);
+				Statistics.CPS = (float) (1.0/(System.currentTimeMillis()-time));
+				time = System.currentTimeMillis();
 				
 				// Adds Client to FIFO
-				ClientHandler worker = new ClientHandler(clientSocket, System.currentTimeMillis());
+				ClientHandler worker = new ClientHandler(clientSocket, time);
 				EventDrivenServer.FIFO.add(worker);
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

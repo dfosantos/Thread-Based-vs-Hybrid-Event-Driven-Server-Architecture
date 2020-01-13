@@ -14,10 +14,10 @@ public class Statistics extends Thread{
 	public void run() {
 		while(true) {
 			Statistics.activeThreads = java.lang.Thread.activeCount();		
-			
+			//System.out.println(CPS);
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

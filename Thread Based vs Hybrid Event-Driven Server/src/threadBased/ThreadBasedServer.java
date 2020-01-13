@@ -28,7 +28,7 @@ public class ThreadBasedServer implements Runnable {
 
 			try {
 				clientSocket = this.serverSocket.accept();
-				new ClientHandler(clientSocket).start();
+				new ClientHandler(clientSocket, System.currentTimeMillis()).start();
 			} catch (IOException e) {
 				throw new RuntimeException("Error accepting client connection", e);
 			}

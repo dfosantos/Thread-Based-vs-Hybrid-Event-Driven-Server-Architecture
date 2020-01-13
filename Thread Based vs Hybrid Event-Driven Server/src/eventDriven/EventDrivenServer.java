@@ -37,7 +37,6 @@ public class EventDrivenServer implements Runnable {
 		new FIFO(serverPort).start();
 
 		while (true) {
-			System.out.println(executor.getActiveCount() );
 			if (executor.getActiveCount() < threadNumber && !FIFO.isEmpty()) {
 				executor.execute(FIFO.remove());
 
