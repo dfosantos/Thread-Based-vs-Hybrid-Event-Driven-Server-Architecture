@@ -13,8 +13,8 @@ public class EventDrivenServer implements Runnable {
 
 	protected int serverPort = 8080;
 	protected ServerSocket serverSocket = null;
-	static Queue<ClientHandler> FIFO = new LinkedList<>();
-	protected ThreadPoolExecutor executor;
+	public static Queue<ClientHandler> FIFO = new LinkedList<>();
+	public static ThreadPoolExecutor executor;
 
 	public EventDrivenServer(int port) {
 		this.serverPort = port;
@@ -25,8 +25,8 @@ public class EventDrivenServer implements Runnable {
 		System.out.println("Running Event Driven Server");
 
 		int threadNumber;
-		threadNumber = Runtime.getRuntime().availableProcessors();
-		threadNumber = 8;
+		// threadNumber = Runtime.getRuntime().availableProcessors();
+		threadNumber = 16;
 
 		new ServerStatisticsGUI().run();
 		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadNumber);
@@ -36,7 +36,10 @@ public class EventDrivenServer implements Runnable {
 
 		while (true) {
 			if (executor.getActiveCount() < threadNumber && !FIFO.isEmpty()) {
-				executor.execute(FIFO.remove());
+				synchronized (FIFO) {
+					executor.execute(FIFO.remove());
+
+				}
 
 			}
 

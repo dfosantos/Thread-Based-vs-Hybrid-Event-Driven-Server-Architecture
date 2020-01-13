@@ -13,21 +13,21 @@ public class ClientHandler extends Thread {
 	Socket socket;
 	static final String path = "files/file";
 	long startTime;
+	int fileSize;
 
-	public ClientHandler(Socket clientSocket, long startTime) throws IOException {
+	public ClientHandler(Socket clientSocket, long startTime, int fileSize) throws IOException {
 		this.socket = clientSocket;
-
+		this.fileSize = fileSize;
 		this.startTime = startTime;
 	}
 
 	@Override
 	public void run() {
 
-		int size = 10000;
-		int offset = getRandomNumberInRange(0,1073741824 - size);
+		int offset = getRandomNumberInRange(0,1073741824 - fileSize);
 		byte[] read = null;
 
-		read = FileOps.NIO_Read(ClientHandler.path, size, offset);
+		read = FileOps.NIO_Read(ClientHandler.path, fileSize, offset);
 
 		MessageDigest msg = null;
 		
@@ -49,9 +49,9 @@ public class ClientHandler extends Thread {
 			e.printStackTrace();
 		}
 
-		long time = System.currentTimeMillis() - startTime;
+		long time = System.nanoTime() - startTime;
 		Statistics.clientTimes.add(time);
-		Statistics.clientDebits.add((float) (size / time));
+		Statistics.clientDebits.add((float) (fileSize / time));
 
 	}
 	

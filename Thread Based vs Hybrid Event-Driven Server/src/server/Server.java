@@ -5,6 +5,7 @@ import threadBased.ThreadBasedServer;
 
 public class Server {
 
+	public static String server;
 	public static void main(String[] args) {
 
 		if (args.length != 2 || !(args[0].equals("THREAD") || args[0].equals(("EVENT")))) {
@@ -13,6 +14,7 @@ public class Server {
 			System.exit(0);
 		}
 
+		server = args[0];
 		if (args[0].equals("THREAD"))
 			new ThreadBasedServer(Integer.parseInt(args[1])).run();
 
