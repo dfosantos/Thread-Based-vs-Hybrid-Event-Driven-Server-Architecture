@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import eventDriven.EventDrivenServer;
+import eventDriven.FIFO;
+import threadBased.ThreadBasedServer;
 
 public class Statistics extends Thread {
 
@@ -26,18 +28,18 @@ public class Statistics extends Thread {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
-		sb.append("CPS,TimePerClient");
+		sb.append("CPS;TimePerClient;ActiveThreads");
 		sb.append("\n");
-		
+
 		while (true) {
 			if (!clientTimes.isEmpty()) {
 				averageTimePerClient = (float) (clientTimes.get(0) / 1000000.0);
 				clientTimes.clear();
-				sb.append(String.valueOf(CPS) + "," + averageTimePerClient + "\n");
+				sb.append(String.valueOf(CPS) + ";" + averageTimePerClient + ";" + activeThreads + "\n");
 			}
-			
+
 			if (Server.server.equals("EVENT"))
 				Statistics.activeThreads = EventDrivenServer.executor.getActiveCount();
 			else
@@ -51,6 +53,11 @@ public class Statistics extends Thread {
 				writer.close();
 			}
 			try {
+				if (ThreadBasedServer.CPS < 5000) {
+					ThreadBasedServer.CPS++;
+					FIFO.CPS++;
+				}
+
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
