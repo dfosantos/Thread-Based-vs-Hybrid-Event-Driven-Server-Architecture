@@ -1,5 +1,8 @@
 package server;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import eventDriven.EventDrivenServer;
@@ -12,15 +15,29 @@ public class Statistics extends Thread {
 	public static int activeThreads;
 	public static ArrayList<Long> clientTimes = new ArrayList<>();
 	public static ArrayList<Float> clientDebits = new ArrayList<>();
+	public static boolean stop = false;
 
 	@Override
 	public void run() {
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(new File("files/test.csv"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("CPS,TimePerClient");
+		sb.append("\n");
+		
 		while (true) {
 			if (!clientTimes.isEmpty()) {
 				averageTimePerClient = (float) (clientTimes.get(0) / 1000000.0);
 				clientTimes.clear();
+				sb.append(String.valueOf(CPS) + "," + averageTimePerClient + "\n");
 			}
-
+			
 			if (Server.server.equals("EVENT"))
 				Statistics.activeThreads = EventDrivenServer.executor.getActiveCount();
 			else
@@ -29,9 +46,12 @@ public class Statistics extends Thread {
 			ServerStatisticsGUI.label.setText(String.valueOf(averageTimePerClient) + "ms");
 			ServerStatisticsGUI.label_2.setText(String.valueOf(activeThreads));
 			ServerStatisticsGUI.lblNewLabel_6.setText(String.valueOf(EventDrivenServer.FIFO.size()));
-
+			if (stop) {
+				writer.write(sb.toString());
+				writer.close();
+			}
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

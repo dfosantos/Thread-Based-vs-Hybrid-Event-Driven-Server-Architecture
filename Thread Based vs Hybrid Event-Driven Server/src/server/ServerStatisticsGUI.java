@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 
 public class ServerStatisticsGUI implements Runnable {
@@ -62,7 +63,7 @@ public class ServerStatisticsGUI implements Runnable {
 		frame = new JFrame();
 		frame.getContentPane().setForeground(SystemColor.menu);
 		frame.getContentPane().setBackground(SystemColor.menu);
-		frame.setBounds(100, 100, 528, 255);
+		frame.setBounds(100, 100, 566, 466);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -170,5 +171,14 @@ public class ServerStatisticsGUI implements Runnable {
 		lblNewLabel_6 = new JLabel("New label");
 		lblNewLabel_6.setBounds(169, 171, 59, 14);
 		frame.getContentPane().add(lblNewLabel_6);
+		
+		JButton btnNewButton = new JButton("Write to file");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Statistics.stop = true;
+			}
+		});
+		btnNewButton.setBounds(137, 276, 241, 75);
+		frame.getContentPane().add(btnNewButton);
 	}
 }
